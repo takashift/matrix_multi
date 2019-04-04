@@ -1,0 +1,2 @@
+# matrix_multi_OpenCL
+HPC169のOpenCL、OpenARCの性能比較用行列積計算ファイル
