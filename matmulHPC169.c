@@ -67,7 +67,7 @@ int main() {
     status=clGetPlatformIDs(1, &myp, NULL);
 
     cl_device_id device_id;
-    err=clGetDeviceIDs(myp, CL_DEVICE_TYPE_ACCELERATOR, 1, &device_id, NULL);
+    status=clGetDeviceIDs(myp, CL_DEVICE_TYPE_ACCELERATOR, 1, &device_id, NULL);
 
     cl_context context;
     context = clCreateContext(NULL, num_devices, device_id, NULL, NULL, &status);
