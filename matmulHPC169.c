@@ -16,9 +16,9 @@ static const int MaxDevices  = 10;
 static const int MaxLogSize  = 5000;
 
 // 64バイトにアライメントしないとWARNINGが出る
-static float* B = (float *)aligned_alloc(64, N * N * sizeof(float));
-static float* C = (float *)aligned_alloc(64, N * N * sizeof(float));
-static float* A = (float *)aligned_alloc(64, N * N * sizeof(float));
+float* B = (float *)aligned_alloc(64, N * N * sizeof(float));
+float* C = (float *)aligned_alloc(64, N * N * sizeof(float));
+float* A = (float *)aligned_alloc(64, N * N * sizeof(float));
 
 static void printError(const cl_int err);
 
