@@ -189,27 +189,27 @@ int main() {
     }
 
     // 8.カーネルの引数のセット
-    status = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *)&memB);
-    if(status != CL_SUCCESS) {
-        fprintf(stderr, "clSetKernelArg for menB failed.\n");
-        return 8;
-    }
-
-    status = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&memC);
-    if(status != CL_SUCCESS) {
-        fprintf(stderr, "clSetKernelArg for menC failed.\n");
-        return 8;
-    }
-
-    status = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *)&memA);
+    status = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *)&memA);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clSetKernelArg for menA failed.\n");
         return 8;
     }
     
+    status = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&memB);
+    if(status != CL_SUCCESS) {
+        fprintf(stderr, "clSetKernelArg for menB failed.\n");
+        return 8;
+    }
+
+    status = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *)&memC);
+    if(status != CL_SUCCESS) {
+        fprintf(stderr, "clSetKernelArg for menC failed.\n");
+        return 8;
+    }
+
     status = clSetKernelArg(kernel, 3, sizeof(int), (void *)&NumElements);
     if(status != CL_SUCCESS) {
-        fprintf(stderr, "clSetKernelArg for menA failed.\n");
+        fprintf(stderr, "clSetKernelArg for NumElements failed.\n");
         return 8;
     }
 
