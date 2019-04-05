@@ -35,9 +35,9 @@ int main() {
     float* C; // = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
     float* A; // = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
 
-    posix_memalign(B, 64, NumElements * NumElements * sizeof(float));
-    posix_memalign(C, 64, NumElements * NumElements * sizeof(float));
-    posix_memalign(A, 64, NumElements * NumElements * sizeof(float));
+    posix_memalign(&B, 64, NumElements * NumElements * sizeof(float));
+    posix_memalign(&C, 64, NumElements * NumElements * sizeof(float));
+    posix_memalign(&A, 64, NumElements * NumElements * sizeof(float));
 
     // 行列初期化
     for (i = 0; i < NumElements * NumElements; i++)
