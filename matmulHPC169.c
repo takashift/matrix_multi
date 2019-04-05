@@ -80,7 +80,7 @@ int main() {
     }
 
     cl_context context;
-    context = clCreateContext(NULL, num_devices, device_id, NULL, NULL, &status);
+    context = clCreateContext(NULL, num_devices, &device_id, NULL, NULL, &status);
     // clCreateContextFromType(NULL, CL_DEVICE_TYPE_ALL, NULL, NULL, &status);
     
     if(status != CL_SUCCESS) {
