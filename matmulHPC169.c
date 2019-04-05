@@ -14,9 +14,9 @@ static const int MaxDevices  = 10;
 static const int MaxLogSize  = 5000;
 
 // 64バイトにアライメントしないとWARNINGが出る
-static float* B = (float *)aligned_alloc(64, NumElements * sizeof(float));
-static float* C = (float *)aligned_alloc(64, NumElements * sizeof(float));
-static float* A = (float *)aligned_alloc(64, NumElements * sizeof(float));
+static float* B = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
+static float* C = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
+static float* A = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
 
 static void printError(const cl_int err);
 
@@ -33,6 +33,20 @@ int main() {
     double elapsed_time;
 
     cl_int status;
+
+    // 行列初期化
+    for (i = 0; i < NumElements * NumElements; i++)
+    {
+        a[i] = (float)0.0F;
+    }
+    for (i = 0; i < NumElements * NumElements; i++)
+    {
+        b[i] = (float)i;
+    }
+    for (i = 0; i < NumElements * NumElements; i++)
+    {
+        c[i] = (float)1.0F;
+    }
 
     // 1.コンテキストの作成
     cl_context context;
@@ -162,7 +176,7 @@ int main() {
         return 8;
     }
     
-    status = clSetKernelArg(kernel, 3, sizeof(cl_mem), (void *)&memA);
+    status = clSetKernelArg(kernel, 3, sizeof(int), (void *)&NumElements);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clSetKernelArg for menA failed.\n");
         return 8;
@@ -192,11 +206,23 @@ int main() {
     elapsed_time = my_timer() - elapsed_time;
     printf("Accelerator Elapsed time = %lf sec\n", elapsed_time);
 
-    // 結果の表示（一部）
-    printf("(B, C, A)\n");
-    for(int i=0; i<100; i++) {
-        printf("%f, %f, %f, (%f)\n", B[i], C[i], A[i], B[i]+C[i]);
+
+    // 結果の出力
+    double matrix_sum = 0.0;
+    double rel_err = 0.0;
+
+    for (i=0; i<NumElements*NumElements; i++){
+        matrix_sum += A[i]*A[i];
     }
+    matrix_sum = sqrt(matrix_sum);
+
+    printf("Result = %lf\n", matrix_sum);
+
+    // // 結果の表示（一部）
+    // printf("(B, C, A)\n");
+    // for(int i=0; i<100; i++) {
+    //     printf("%f, %f, %f, (%f)\n", B[i], C[i], A[i], B[i]+C[i]);
+    // }
 
     // 11.リソースの解放
     clReleaseMemObject(memA);
