@@ -66,8 +66,18 @@ int main() {
     cl_platform_id myp;
     status=clGetPlatformIDs(1, &myp, NULL);
 
+    if(status != CL_SUCCESS) {
+        fprintf(stderr, "clGetPlatformIDs failed.\n");
+        return 1;
+    }
+
     cl_device_id device_id;
     status=clGetDeviceIDs(myp, CL_DEVICE_TYPE_ACCELERATOR, 1, &device_id, NULL);
+
+    if(status != CL_SUCCESS) {
+        fprintf(stderr, "clGetDeviceIDs failed.\n");
+        return 1;
+    }
 
     cl_context context;
     context = clCreateContext(NULL, num_devices, device_id, NULL, NULL, &status);
