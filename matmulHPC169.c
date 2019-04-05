@@ -9,16 +9,10 @@
 #endif // __APPLE__
 
 #define MAX_BINARY_SIZE (0x100000)
-#define N 512
 
-static const int NumElements = N;
+static const int NumElements = 512;
 static const int MaxDevices  = 10;
 static const int MaxLogSize  = 5000;
-
-// 64バイトにアライメントしないとWARNINGが出る
-float* B = (float *)aligned_alloc(64, N * N * sizeof(float));
-float* C = (float *)aligned_alloc(64, N * N * sizeof(float));
-float* A = (float *)aligned_alloc(64, N * N * sizeof(float));
 
 static void printError(const cl_int err);
 
@@ -35,6 +29,11 @@ int main() {
     double elapsed_time;
     int i;
     cl_int status;
+
+    // 64バイトにアライメントしないとWARNINGが出る
+    float* B = (float *)aligned_alloc(64, N * N * sizeof(float));
+    float* C = (float *)aligned_alloc(64, N * N * sizeof(float));
+    float* A = (float *)aligned_alloc(64, N * N * sizeof(float));
 
     // 行列初期化
     for (i = 0; i < NumElements * NumElements; i++)
