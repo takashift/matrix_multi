@@ -30,14 +30,14 @@ int main() {
     double elapsed_time;
     int i;
     cl_int status;
-    cl_uint num_devices = 0;
-  aocl_utils::scoped_array<cl_device_id> device_id;
+    cl_uint num_devices = 1;
+//   aocl_utils::scoped_array<cl_device_id> device_id;
 
-  // Query the available OpenCL device.
-  device_id.reset(aocl_utils::getDevices(platform, CL_DEVICE_TYPE_ALL, &num_devices));
-  std::cout << "Platform: " << aocl_utils::getPlatformName(platform).c_str() << std::endl;
-  std::cout << "Using " << num_devices << " device(s)" << std::endl;
-  std::cout << " " << aocl_utils::getDeviceName(device_id[0]).c_str() << std::endl;
+//   // Query the available OpenCL device.
+//   device_id.reset(aocl_utils::getDevices(platform, CL_DEVICE_TYPE_ALL, &num_devices));
+//   std::cout << "Platform: " << aocl_utils::getPlatformName(platform).c_str() << std::endl;
+//   std::cout << "Using " << num_devices << " device(s)" << std::endl;
+//   std::cout << " " << aocl_utils::getDeviceName(device_id[0]).c_str() << std::endl;
 
     // 64バイトにアライメントしないとWARNINGが出る
     float* B; // = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
@@ -63,6 +63,12 @@ int main() {
     }
 
     // 1.コンテキストの作成
+    cl_platform_id myp;
+    status=clGetPlatformIDs(1, &myp, NULL);
+
+    cl_device_id device_id;
+    err=clGetDeviceIDs(myp, CL_DEVICE_TYPE_ACCELERATOR, 1, &device_id, NULL);
+
     cl_context context;
     context = clCreateContext(NULL, num_devices, device_id, NULL, NULL, &status);
     // clCreateContextFromType(NULL, CL_DEVICE_TYPE_ALL, NULL, NULL, &status);
