@@ -30,6 +30,14 @@ int main() {
     double elapsed_time;
     int i;
     cl_int status;
+    cl_uint num_devices = 0;
+  aocl_utils::scoped_array<cl_device_id> device_id;
+
+  // Query the available OpenCL device.
+  device_id.reset(aocl_utils::getDevices(platform, CL_DEVICE_TYPE_ALL, &num_devices));
+  std::cout << "Platform: " << aocl_utils::getPlatformName(platform).c_str() << std::endl;
+  std::cout << "Using " << num_devices << " device(s)" << std::endl;
+  std::cout << " " << aocl_utils::getDeviceName(device_id[0]).c_str() << std::endl;
 
     // 64バイトにアライメントしないとWARNINGが出る
     float* B; // = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
@@ -56,13 +64,14 @@ int main() {
 
     // 1.コンテキストの作成
     cl_context context;
-    context = clCreateContextFromType(NULL, CL_DEVICE_TYPE_ALL, NULL, NULL, &status);
+    context = clCreateContext(NULL, num_devices, device_id, NULL, NULL, &status);
+    // clCreateContextFromType(NULL, CL_DEVICE_TYPE_ALL, NULL, NULL, &status);
     
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clCreateContextFromType failed.\n");
         return 1;
     }
-
+    
     // 2.コンテキストに含まれるデバイスを取得
     cl_device_id devices[MaxDevices];
     size_t size_return;
