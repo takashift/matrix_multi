@@ -9,15 +9,16 @@
 #endif // __APPLE__
 
 #define MAX_BINARY_SIZE (0x100000)
+#define N 512
 
-static const int NumElements = 512;
+static const int NumElements = N;
 static const int MaxDevices  = 10;
 static const int MaxLogSize  = 5000;
 
 // 64バイトにアライメントしないとWARNINGが出る
-static float* B = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
-static float* C = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
-static float* A = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
+static float* B = (float *)aligned_alloc(64, N * N * sizeof(float));
+static float* C = (float *)aligned_alloc(64, N * N * sizeof(float));
+static float* A = (float *)aligned_alloc(64, N * N * sizeof(float));
 
 static void printError(const cl_int err);
 
@@ -32,21 +33,21 @@ double my_timer ()
 
 int main() {
     double elapsed_time;
-
+    int i;
     cl_int status;
 
     // 行列初期化
     for (i = 0; i < NumElements * NumElements; i++)
     {
-        a[i] = (float)0.0F;
+        A[i] = (float)0.0F;
     }
     for (i = 0; i < NumElements * NumElements; i++)
     {
-        b[i] = (float)i;
+        B[i] = (float)i;
     }
     for (i = 0; i < NumElements * NumElements; i++)
     {
-        c[i] = (float)1.0F;
+        C[i] = (float)1.0F;
     }
 
     // 1.コンテキストの作成
@@ -130,7 +131,7 @@ int main() {
     }
 
     // 7.メモリオブジェクトの作成
-    for(int i=0; i<NumElements; i++) {
+    for(i=0; i<NumElements; i++) {
         // データをセット
         B[i] = (float)i * 100.0f;
         C[i] = (float)i / 100.0f;
