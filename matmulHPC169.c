@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <sys/time.h>
 
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
