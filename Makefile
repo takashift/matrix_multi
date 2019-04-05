@@ -10,7 +10,7 @@ AOCL_COMPILE_CONFIG=$(shell aocl compile-config)
 AOCL_LINK_CONFIG=$(shell aocl link-config)
 
 matmulHPC169 : matmulHPC169.o
-		gcc -o matmulHPC169 matmulHPC169.o $(AOCL_LINK_CONFIG)
+		gcc -o matmulHPC169 matmulHPC169.o -lm $(AOCL_LINK_CONFIG)
 
 matmulHPC169.o : matmulHPC169.c
 		gcc -c matmulHPC169.c $(AOCL_COMPILE_CONFIG)
