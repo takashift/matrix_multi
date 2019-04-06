@@ -40,13 +40,13 @@ int main() {
 //   std::cout << " " << aocl_utils::getDeviceName(device_id[0]).c_str() << std::endl;
 
     // 64バイトにアライメントしないとWARNINGが出る
-    float* B; // = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
-    float* C; // = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
-    float* A; // = (float *)aligned_alloc(64, NumElements * NumElements * sizeof(float));
+    double* B; // = (double *)aligned_alloc(64, NumElements * NumElements * sizeof(double));
+    double* C; // = (double *)aligned_alloc(64, NumElements * NumElements * sizeof(double));
+    double* A; // = (double *)aligned_alloc(64, NumElements * NumElements * sizeof(double));
 
-    posix_memalign((void **)&B, 64, NumElements * NumElements * sizeof(float));
-    posix_memalign((void **)&C, 64, NumElements * NumElements * sizeof(float));
-    posix_memalign((void **)&A, 64, NumElements * NumElements * sizeof(float));
+    posix_memalign((void **)&B, 64, NumElements * NumElements * sizeof(double));
+    posix_memalign((void **)&C, 64, NumElements * NumElements * sizeof(double));
+    posix_memalign((void **)&A, 64, NumElements * NumElements * sizeof(double));
 
     // 1.コンテキストの作成
     cl_platform_id myp;
@@ -154,34 +154,34 @@ int main() {
     // }
     for (i = 0; i < NumElements * NumElements; i++)
     {
-        A[i] = (float)0.0F;
+        A[i] = (double)0.0F;
     }
     for (i = 0; i < NumElements * NumElements; i++)
     {
-        B[i] = (float)i;
+        B[i] = (double)i;
     }
     for (i = 0; i < NumElements * NumElements; i++)
     {
-        C[i] = (float)1.0F;
+        C[i] = (double)1.0F;
     }
 
 
     cl_mem memB;
-    memB = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements * NumElements, B, &status);
+    memB = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_double) * NumElements * NumElements, B, &status);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clCreateBuffer for menB failed.\n");
         return 7;
     }
 
     cl_mem memC;
-    memC = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements * NumElements, C, &status);
+    memC = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_double) * NumElements * NumElements, C, &status);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clCreateBuffer for menC failed.\n");
         return 7;
     }
 
     cl_mem memA;
-    memA = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements * NumElements, A, &status);
+    memA = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_double) * NumElements * NumElements, A, &status);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clCreateBuffer for menA failed.\n");
         return 7;
@@ -227,7 +227,7 @@ int main() {
     }
 
     // 10.結果の取得
-    status = clEnqueueReadBuffer(queue, memA, CL_TRUE, 0, sizeof(cl_float) * NumElements * NumElements, A, 0, NULL, NULL);
+    status = clEnqueueReadBuffer(queue, memA, CL_TRUE, 0, sizeof(cl_double) * NumElements * NumElements, A, 0, NULL, NULL);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clEnqueueReadBuffer failed.\n");
         return 10;
