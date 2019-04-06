@@ -139,7 +139,7 @@ int main() {
 
     // 6.カーネルの作成
     cl_kernel kernel;
-    kernel = clCreateKernel(program, "addVector", &status);
+    kernel = clCreateKernel(program, "matMul", &status);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clCreateKernel failed.\n");
         return 6;
