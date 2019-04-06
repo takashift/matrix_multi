@@ -168,21 +168,21 @@ int main() {
     }
 
     cl_mem memB;
-    memB = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements, B, &status);
+    memB = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements * NumElements, B, &status);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clCreateBuffer for menB failed.\n");
         return 7;
     }
 
     cl_mem memC;
-    memC = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements, C, &status);
+    memC = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements * NumElements, C, &status);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clCreateBuffer for menC failed.\n");
         return 7;
     }
 
     cl_mem memA;
-    memA = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements, A, &status);
+    memA = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements * NumElements, A, &status);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clCreateBuffer for menA failed.\n");
         return 7;
@@ -228,7 +228,7 @@ int main() {
     }
 
     // 10.結果の取得
-    status = clEnqueueReadBuffer(queue, memA, CL_TRUE, 0, sizeof(cl_float) * NumElements, A, 0, NULL, NULL);
+    status = clEnqueueReadBuffer(queue, memA, CL_TRUE, 0, sizeof(cl_float) * NumElements * NumElements, A, 0, NULL, NULL);
     if(status != CL_SUCCESS) {
         fprintf(stderr, "clEnqueueReadBuffer failed.\n");
         return 10;
