@@ -9,7 +9,7 @@
 #include <CL/cl.h>
 #endif // __APPLE__
 
-#define MAX_BINARY_SIZE (0x100000)
+// #define MAX_BINARY_SIZE (0x100000)
 
 static const int NumElements = 512;
 static const int MaxDevices  = 10;
@@ -47,20 +47,6 @@ int main() {
     posix_memalign((void **)&B, 64, NumElements * NumElements * sizeof(float));
     posix_memalign((void **)&C, 64, NumElements * NumElements * sizeof(float));
     posix_memalign((void **)&A, 64, NumElements * NumElements * sizeof(float));
-
-    // 行列初期化
-    for (i = 0; i < NumElements * NumElements; i++)
-    {
-        A[i] = (float)0.0F;
-    }
-    for (i = 0; i < NumElements * NumElements; i++)
-    {
-        B[i] = (float)i;
-    }
-    for (i = 0; i < NumElements * NumElements; i++)
-    {
-        C[i] = (float)1.0F;
-    }
 
     // 1.コンテキストの作成
     cl_platform_id myp;
@@ -160,12 +146,25 @@ int main() {
     }
 
     // 7.メモリオブジェクトの作成
-    for(i=0; i<NumElements; i++) {
-        // データをセット
-        B[i] = (float)i * 100.0f;
-        C[i] = (float)i / 100.0f;
-        A[i] = 0.0f;
+    // for(i=0; i<NumElements; i++) {
+    //     // データをセット
+    //     B[i] = (float)i * 100.0f;
+    //     C[i] = (float)i / 100.0f;
+    //     A[i] = 0.0f;
+    // }
+    for (i = 0; i < NumElements * NumElements; i++)
+    {
+        A[i] = (float)0.0F;
     }
+    for (i = 0; i < NumElements * NumElements; i++)
+    {
+        B[i] = (float)i;
+    }
+    for (i = 0; i < NumElements * NumElements; i++)
+    {
+        C[i] = (float)1.0F;
+    }
+
 
     cl_mem memB;
     memB = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_float) * NumElements * NumElements, B, &status);
