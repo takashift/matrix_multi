@@ -1,7 +1,7 @@
 __attribute__((reqd_work_group_size(1,1,1)))
-__kernel void matMul(__global float *restrict a, __global const float *restrict b, __global const float *restrict c, const int N) {
+__kernel void matMul(__global double *restrict a, __global const double *restrict b, __global const double *restrict c, const int N) {
     int i, j, k, iter, iter2;
-    float sum;
+    double sum;
 
     // for (i=0; i<N; i++){
     // #pragma unroll
