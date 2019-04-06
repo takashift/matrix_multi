@@ -1,5 +1,5 @@
 __attribute__((reqd_work_group_size(1,1,1)))
-__kernel void addVector(__global float *a, __global const float *b, __global const float *c, const int N) {
+__kernel void addVector(__global float *restrict a, __global const float *restrict b, __global const float *restrict c, const int N) {
     int i, j, k, iter, iter2;
     float sum;
 
