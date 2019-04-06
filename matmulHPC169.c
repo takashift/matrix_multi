@@ -11,7 +11,7 @@
 
 // #define MAX_BINARY_SIZE (0x100000)
 
-static const int NumElements = 512;
+static const int NumElements = 10000;
 static const int MaxDevices  = 10;
 static const int MaxLogSize  = 5000;
 
