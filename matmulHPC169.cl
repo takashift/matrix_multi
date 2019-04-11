@@ -1,6 +1,6 @@
 __attribute__((reqd_work_group_size(1,1,1)))
 __kernel void matMul(__global double *restrict a, __global const double *restrict b, __global const double *restrict c, const int N) {
-    int i, j, k, iter
+    int i, j, k, iter;
     unsigned int iter2;
     double sum;
 
